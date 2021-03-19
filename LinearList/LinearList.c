@@ -6,24 +6,81 @@
 typedef int element;
 typedef struct {
 	int list[BUFSIZ];
-	int length
+	int length;
 } ArrayList;
 
 void init(ArrayList* L);
-int isEmpty(ArrayList* L);
-int isFull(ArrayList* L);
+void insertFirst(ArrayList* L, element item);
+void insertLast(ArrayList* L, element item);
 void insert(ArrayList* L, int pos, element item);
 element delete(ArrayList* L, int pos);
+int getLength(ArrayList* L);
+int isEmpty(ArrayList* L);
+int isFull(ArrayList* L);
+void Display(ArrayList* L);
 
+// main
 int main()
 {
-
-
-	return 0;
+	// some test code...
 }
 
 void init(ArrayList* L) {	// initialize data to 0
 	L->length = 0;
+}
+
+void insertFirst(ArrayList* L, element item) {
+	L->list[0] = item;
+	L->length++;
+}
+
+void insertLast(ArrayList* L, element item) {
+	L->list[getLength(L)] = item;
+	L->length++;
+}
+
+void insert(ArrayList* L, int pos, element item) {
+	int i;
+	if (isFull(L)) {	// is list full?
+		printf("List is Full!!\n");
+	}
+
+	else if ((pos < 0) || (pos > L->length)) {	// is proper spot?
+		printf("Index Error!\n");
+	}
+
+	else {
+		for (i = (L->length - 1); i >= pos; i--) {	// make empty spot
+			L->list[i + 1] = L->list[i];
+		}
+		L->list[pos] = item;	// insert data
+		L->length++;	// length++
+	}
+}
+
+element delete (ArrayList* L, int pos) {
+	int i;
+	element item;	// is list empty?
+	if (isEmpty(L)) {
+		printf("List is empty!!\n");
+	}
+
+	else if ((pos < 0) || (pos >= L->length)) {	// is proper spot?
+		printf("Index Error!\n");
+	}
+
+	else {	// delete data
+		item = L->list[pos];	// data backup
+		for (i = pos; i < L->length - 1; i++) {	// pointer connect
+			L->list[i] = L->list[i + 1];
+		}
+		L->length--;	// length--;
+		return item;
+	}
+}
+
+int getLength(ArrayList* L) {
+	return L->length;
 }
 
 int isEmpty(ArrayList* L) {	// empty => 1, not empty => 0
@@ -34,42 +91,9 @@ int isFull(ArrayList* L) {	// full => 1, not full => 0
 	return L->length == BUFSIZ;
 }
 
-void insert(ArrayList* L, int pos, element item) {	
-	int i;
-	if (isFull(L)) {	// is list full?
-		error("List is Full!!");
-	}
-
-	else if ((pos < 0) || (pos > L -> length)) {	// is proper spot?
-		error("Index Error!");
-	}
-
-	else {
-		for (i = (L->length - 1); i >= pos; i--) {	// make empty spot
-			L->list[i + 1] = L->list[i];
-		}
-		L -> list[pos] = item;	// insert data
-		L->length++;	// length++
-	}
-}
-
-element delete (ArrayList* L, int pos) {
-	int i;
-	element item;	// is list empty?
-	if (isEmpty(L)) {
-		error("List is empty!");
-	}
-
-	else if ((pos < 0) || (pos >= L->length)) {	// is proper spot?
-		error("Index error!");
-	}
-
-	else {	// delete data
-		item = L->list[pos];	// data backup
-		for (i = pos; i < L->length - 1; i++) {	// pointer connect
-			L->list[i] = L->list[i + 1];
-		}
-		L->length--;	// length--;
-		return item;
+void Display(ArrayList* L) {
+	printf("==== Print List ====");
+	for (int i = 0; i < getLength(L); i++) {
+		printf("\nArrayList[%d]: %d", i, L->list[i]);
 	}
 }
