@@ -16,7 +16,7 @@ void printTerm(term P[MAX_DEGREE]);
 int main()
 {
 	term A[MAX_DEGREE] = { {3,19}, {4,5}, {1,0} };
-	term B[MAX_DEGREE] = { {5,10}, {7,5}, {1,1} };
+	term B[MAX_DEGREE] = { {5,3}, {7,5}, {1,1} };
 	term C[MAX_DEGREE] = { 0 };
 	addPoly(A, B, C);
 	printf("A(x) = "); printTerm(A);
