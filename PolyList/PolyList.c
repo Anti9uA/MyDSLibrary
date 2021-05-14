@@ -11,7 +11,7 @@ polyList* initList() {
 
 void appendTerm(polyList* PL, float coef, int exp) {
 	Node* newNode;
-	newNode = (Node*)malloc(sizeof(struct Node*));
+	newNode = (Node*)malloc(sizeof(Node));
 	newNode->exp = exp;
 	newNode->coef = coef;
 	if (PL->head == NULL) {		// append first term
